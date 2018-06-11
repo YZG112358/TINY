@@ -1,12 +1,6 @@
-class State:
-    START = 0
-    INNUM = 1
-    INID = 2
-    INASSIGN = 3
-    INCOMMENT = 4
-    DONE = 5
+from enum import Enum
 
-class Token_Type:
+class Token_Type(Enum):
     ENDFILE = 0
     ERROR = 1
 
@@ -33,25 +27,76 @@ class Token_Type:
     RPAREN = 20
     SEMI = 21
 
-Tokens = {0:"ENDFILE", 
-          1:"ERROR",
-          2:"IF",
-          3:"THEN",
-          4:"ELSE",
-          5:"END",
-          6:"REPEAT",
-          7:"UNTIL",
-          8:"READ",
-          9:"WRITE",
-          10:"ID",
-          11:"NUM",
-          12:"ASSIGN",
-          13:"EQ",
-          14:"LT",
-          15:"PLUS",
-          16:"MINUS",
-          17:"TIMES",
-          18:"OVER",
-          19:"LPAREN",
-          20:"RPAREN",
-          21:"SEMI",}
+Tokens = {Token_Type.ENDFILE:"ENDFILE", 
+          Token_Type.ERROR:"ERROR",
+          Token_Type.IF:"IF",
+          Token_Type.THEN:"THEN",
+          Token_Type.ELSE:"ELSE",
+          Token_Type.END:"END",
+          Token_Type.REPEAT:"REPEAT",
+          Token_Type.UNTIL:"UNTIL",
+          Token_Type.READ:"READ",
+          Token_Type.WRITE:"WRITE",
+          Token_Type.ID:"ID",
+          Token_Type.NUM:"NUM",
+          Token_Type.ASSIGN:"ASSIGN",
+          Token_Type.EQ:"EQ",
+          Token_Type.LT:"LT",
+          Token_Type.PLUS:"PLUS",
+          Token_Type.MINUS:"MINUS",
+          Token_Type.TIMES:"TIMES",
+          Token_Type.OVER:"OVER",
+          Token_Type.LPAREN:"LPAREN",
+          Token_Type.RPAREN:"RPAREN",
+          Token_Type.SEMI:"SEMI",}
+
+class Nodekind(Enum):
+    StmtK = 0
+    ExpK = 1
+
+class StmtKind(Enum):
+    IfK = 0
+    RepeatK = 1
+    AssignK = 2
+    ReadK = 3
+    WriteK = 4
+
+class ExpKind(Enum):
+    OpK = 0
+    ConstK = 1
+    IdK = 2
+
+class ExpType(Enum):
+    Void = 0
+    Integer = 1
+    Boolean = 2
+
+class State(Enum):
+    START = 0
+    INNUM = 1
+    INID = 2
+    INASSIGN = 3
+    INCOMMENT = 4
+    DONE = 5
+
+#TODO 
+#add property for each member to enforce enum
+class Node:
+    def __init__(self):
+        self._children = []
+        self.sibling = None
+        self.lineno = 0
+        self.nodekind = None
+        self.stmtkind = None
+        self.expkind = None
+        self.tokentype = None
+        self.name = None
+        self.value = None
+        self.type = None
+    
+    def add_child(self, node):
+        self._children.append(node)
+
+    @property
+    def child(self):
+        return self._children
