@@ -35,36 +35,19 @@ def test_getToken_program():
     program += "\t write fact { output factorial of x }\n"
     program += "end"
     scanner.get_str(program)
-    assert scanner.getToken() == Token_Type.READ
-    assert scanner.getToken() == Token_Type.ID
-    assert scanner.getToken() == Token_Type.SEMI
-    assert scanner.getToken() == Token_Type.IF
-    assert scanner.getToken() == Token_Type.NUM
-    assert scanner.getToken() == Token_Type.LT
-    assert scanner.getToken() == Token_Type.ID
-    assert scanner.getToken() == Token_Type.THEN
-    assert scanner.getToken() == Token_Type.ID
-    assert scanner.getToken() == Token_Type.ASSIGN
-    assert scanner.getToken() == Token_Type.NUM
-    assert scanner.getToken() == Token_Type.SEMI
-    assert scanner.getToken() == Token_Type.REPEAT
-    assert scanner.getToken() == Token_Type.ID
-    assert scanner.getToken() == Token_Type.ASSIGN
-    assert scanner.getToken() == Token_Type.ID
-    assert scanner.getToken() == Token_Type.TIMES
-    assert scanner.getToken() == Token_Type.ID
-    assert scanner.getToken() == Token_Type.SEMI
-    assert scanner.getToken() == Token_Type.ID
-    assert scanner.getToken() == Token_Type.ASSIGN
-    assert scanner.getToken() == Token_Type.ID
-    assert scanner.getToken() == Token_Type.MINUS
-    assert scanner.getToken() == Token_Type.NUM
-    assert scanner.getToken() == Token_Type.UNTIL
-    assert scanner.getToken() == Token_Type.ID
-    assert scanner.getToken() == Token_Type.EQ
-    assert scanner.getToken() == Token_Type.NUM
-    assert scanner.getToken() == Token_Type.SEMI
-    assert scanner.getToken() == Token_Type.WRITE
-    assert scanner.getToken() == Token_Type.ID
-    assert scanner.getToken() == Token_Type.END
-    assert scanner.getToken() == Token_Type.ENDFILE
+
+    results = []
+    res = scanner.getToken()
+    while res != Token_Type.ENDFILE:
+        results.append(res)
+        res = scanner.getToken()
+
+    expected = [Token_Type.READ, Token_Type.ID, Token_Type.SEMI, Token_Type.IF,
+    Token_Type.NUM, Token_Type.LT, Token_Type.ID, Token_Type.THEN, Token_Type.ID,
+    Token_Type.ASSIGN, Token_Type.NUM, Token_Type.SEMI, Token_Type.REPEAT, Token_Type.ID,
+    Token_Type.ASSIGN, Token_Type.ID, Token_Type.TIMES, Token_Type.ID, Token_Type.SEMI,
+    Token_Type.ID, Token_Type.ASSIGN, Token_Type.ID, Token_Type.MINUS, Token_Type.NUM,
+    Token_Type.UNTIL, Token_Type.ID, Token_Type.EQ, Token_Type.NUM, Token_Type.SEMI,
+    Token_Type.WRITE, Token_Type.ID, Token_Type.END]
+
+    assert results == expected
